@@ -469,7 +469,6 @@ button {
   z-index: 2;
 }
 
-/* 일반 카드 - 한 화면에 6칸 */
 .card {
   flex-shrink: 0;
   width: calc((100% - 80px) / 6);
