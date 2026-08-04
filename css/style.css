@@ -112,6 +112,7 @@ button {
   width: 100%;
   height: 68px;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), transparent);
+  transition: background-color 0.2s ease;
 }
 
 .header--scrolled {
@@ -129,6 +130,21 @@ button {
 .header__logo-img {
   width: 92px;
   background: none;
+}
+
+.header__menu-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.header__menu-toggle .material-symbols-outlined {
+  font-size: 28px;
+  line-height: 1;
 }
 
 .header__menu {
@@ -1146,16 +1162,70 @@ body.detail-open {
 /* 태블릿 (≤1024) — 데스크톱과 모바일 사이 중간 스케일 */
 @media (max-width: 1024px) {
   .header__inner {
+    position: relative;
     padding: 0 32px;
-    gap: 20px;
+    gap: 16px;
   }
 
   .header__logo-img {
     width: 80px;
   }
 
+  .header__menu-toggle {
+    display: flex;
+  }
+
+  /* 메뉴 열림 시 헤더·패널 동일 배경으로 이어짐 */
+  .header:has(.header__nav.is-open) {
+    background: rgba(0, 0, 0, 0.95);
+  }
+
+  .header__nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 110;
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.95);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      max-height 0.28s ease,
+      opacity 0.2s ease,
+      visibility 0.2s ease;
+  }
+
+  .header__nav.is-open {
+    max-height: 420px;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.45);
+  }
+
+  .header__menu {
+    flex-direction: column;
+    gap: 0;
+    padding: 4px 0 12px;
+  }
+
   .header__link {
-    font-size: 13px;
+    display: block;
+    padding: 14px 32px;
+    font-size: 15px;
+  }
+
+  .header__link:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+    color: #fff;
+  }
+
+  .header__link--active {
+    border-left: 3px solid #e50914;
+    padding-left: 29px;
   }
 
   .hero__content {
@@ -1260,12 +1330,17 @@ body.detail-open {
     padding: 0 16px;
   }
 
-  .header__nav {
-    display: none;
-  }
-
   .header__logo-img {
     width: 72px;
+  }
+
+  .header__link {
+    padding: 14px 16px;
+    font-size: 14px;
+  }
+
+  .header__link--active {
+    padding-left: 13px;
   }
 
   .hero {

@@ -16,7 +16,18 @@
         <img src="https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/netflix-logo.png" alt="NETFLIX" class="header__logo-img">
       </a>
 
-      <nav class="header__nav" aria-label="메뉴">
+      <button
+        type="button"
+        class="header__menu-toggle"
+        aria-label="메뉴 열기"
+        aria-expanded="false"
+        aria-controls="header-nav"
+        data-menu-toggle
+      >
+        <span class="material-symbols-outlined" aria-hidden="true" data-menu-icon>menu</span>
+      </button>
+
+      <nav class="header__nav" id="header-nav" aria-label="메뉴" data-header-nav>
         <ul class="header__menu">
           <li><a href="#" class="header__link header__link--active">홈</a></li>
           <li><a href="#" class="header__link">시리즈</a></li>

@@ -19,6 +19,7 @@ $(function () {
   }
 
   // 히어로 섹션 사진비됴
+  // 3초 후 비디오 재생하게 하는데 이미지 > 비디오 할때 페이드 인, 아웃 적용 비디오 > 이미지도 마찬가지로 작업
   const $hero = $(".hero");
   const $hero_video = $hero.find(".hero__video");
   const $hero_play_btn = $hero.find("[data-hero-play]");
@@ -287,18 +288,69 @@ $(function () {
     $track.find("img, a").attr("draggable", "false");
   });
 
-  // 프로필 드롭다운
+  // 모바일/태블릿 햄버거 메뉴
+  const $menu_toggle = $("[data-menu-toggle]");
+  const $header_nav = $("[data-header-nav]");
+  const $menu_icon = $("[data-menu-icon]");
   const $profile_wrap = $(".header__profile-wrap");
   const $profile_toggle = $("[data-profile-toggle]");
   const $profile_dropdown = $("[data-profile-dropdown]");
 
-  if ($profile_wrap.length && $profile_toggle.length && $profile_dropdown.length) {
-    const close_dropdown = function () {
-      $profile_wrap.removeClass("is-open");
-      $profile_toggle.attr("aria-expanded", "false");
+  const close_profile_dropdown = function () {
+    if (!$profile_wrap.length) return;
+    $profile_wrap.removeClass("is-open");
+    $profile_toggle.attr("aria-expanded", "false");
+  };
+
+  const close_menu = function () {
+    if (!$header_nav.length) return;
+    $header_nav.removeClass("is-open");
+    $menu_toggle.attr("aria-expanded", "false").attr("aria-label", "메뉴 열기");
+    if ($menu_icon.length) $menu_icon.text("menu");
+  };
+
+  if ($menu_toggle.length && $header_nav.length) {
+    const open_menu = function () {
+      close_profile_dropdown();
+      $header_nav.addClass("is-open");
+      $menu_toggle.attr("aria-expanded", "true").attr("aria-label", "메뉴 닫기");
+      if ($menu_icon.length) $menu_icon.text("close");
     };
 
+    $menu_toggle.on("click", function (e) {
+      e.stopPropagation();
+      if ($header_nav.hasClass("is-open")) {
+        close_menu();
+      } else {
+        open_menu();
+      }
+    });
+
+    $header_nav.on("click", function (e) {
+      e.stopPropagation();
+    });
+
+    $header_nav.find(".header__link").on("click", function () {
+      close_menu();
+    });
+
+    $(document).on("click.headerMenu", function () {
+      close_menu();
+    });
+
+    $(document).on("keydown.headerMenu", function (e) {
+      if (e.key === "Escape") close_menu();
+    });
+
+    $(window).on("resize.headerMenu", function () {
+      if (window.innerWidth > 1024) close_menu();
+    });
+  }
+
+  // 프로필 드롭다운
+  if ($profile_wrap.length && $profile_toggle.length && $profile_dropdown.length) {
     const open_dropdown = function () {
+      close_menu();
       $profile_wrap.addClass("is-open");
       $profile_toggle.attr("aria-expanded", "true");
     };
@@ -306,7 +358,7 @@ $(function () {
     $profile_toggle.on("click", function (e) {
       e.stopPropagation();
       if ($profile_wrap.hasClass("is-open")) {
-        close_dropdown();
+        close_profile_dropdown();
       } else {
         open_dropdown();
       }
@@ -317,16 +369,16 @@ $(function () {
     });
 
     $(document).on("click", function () {
-      close_dropdown();
+      close_profile_dropdown();
     });
 
     $(document).on("keydown", function (e) {
-      if (e.key === "Escape") close_dropdown();
+      if (e.key === "Escape") close_profile_dropdown();
     });
 
     $("[data-logout]").on("click", function () {
-      close_dropdown();
-      alert("로그아웃되었습니다.");
+      close_profile_dropdown();
+      alert("로그아웃 기능 미구현");
     });
   }
 
