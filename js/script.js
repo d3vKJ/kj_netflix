@@ -286,4 +286,76 @@ $(function () {
 
     $track.find("img, a").attr("draggable", "false");
   });
+
+  // 프로필 드롭다운
+  const $profile_wrap = $(".header__profile-wrap");
+  const $profile_toggle = $("[data-profile-toggle]");
+  const $profile_dropdown = $("[data-profile-dropdown]");
+
+  if ($profile_wrap.length && $profile_toggle.length && $profile_dropdown.length) {
+    const close_dropdown = function () {
+      $profile_wrap.removeClass("is-open");
+      $profile_toggle.attr("aria-expanded", "false");
+    };
+
+    const open_dropdown = function () {
+      $profile_wrap.addClass("is-open");
+      $profile_toggle.attr("aria-expanded", "true");
+    };
+
+    $profile_toggle.on("click", function (e) {
+      e.stopPropagation();
+      if ($profile_wrap.hasClass("is-open")) {
+        close_dropdown();
+      } else {
+        open_dropdown();
+      }
+    });
+
+    $profile_dropdown.on("click", function (e) {
+      e.stopPropagation();
+    });
+
+    $(document).on("click", function () {
+      close_dropdown();
+    });
+
+    $(document).on("keydown", function (e) {
+      if (e.key === "Escape") close_dropdown();
+    });
+
+    $("[data-logout]").on("click", function () {
+      close_dropdown();
+      alert("로그아웃되었습니다.");
+    });
+  }
+
+  // 상세정보 모달
+  const $detail = $("[data-detail]");
+
+  if ($detail.length) {
+    const open_detail = function () {
+      $detail.addClass("is-open");
+      $("body").addClass("detail-open");
+    };
+
+    const close_detail = function () {
+      $detail.removeClass("is-open");
+      $("body").removeClass("detail-open");
+    };
+
+    $("[data-open-detail]").on("click", function () {
+      open_detail();
+    });
+
+    $("[data-close-detail]").on("click", function () {
+      close_detail();
+    });
+
+    $(document).on("keydown", function (e) {
+      if (e.key === "Escape" && $detail.hasClass("is-open")) {
+        close_detail();
+      }
+    });
+  }
 });

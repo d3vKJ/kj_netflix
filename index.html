@@ -35,12 +35,24 @@
         <button type="button" class="header__icon-btn" aria-label="알림">
           <span class="material-symbols-outlined" aria-hidden="true">notifications</span>
         </button>
-        <button type="button" class="header__profile" aria-label="프로필">
-          <span class="header__avatar">
-            <img src="https://picsum.photos/128/128" alt="프로필 이미지">
-          </span>
-          <span class="material-symbols-outlined header__caret" aria-hidden="true">arrow_drop_down</span>
-        </button>
+        <div class="header__profile-wrap">
+          <button type="button" class="header__profile" aria-label="프로필" aria-expanded="false" aria-haspopup="true" data-profile-toggle>
+            <span class="header__avatar">
+              <img src="https://picsum.photos/seed/netflix-user/128/128" alt="프로필 이미지">
+            </span>
+            <span class="material-symbols-outlined header__caret" aria-hidden="true">arrow_drop_down</span>
+          </button>
+          <div class="profile-dropdown" data-profile-dropdown>
+            <a href="profile.html" class="profile-dropdown__item">
+              <span class="material-symbols-outlined" aria-hidden="true">manage_accounts</span>
+              <span>프로필 설정</span>
+            </a>
+            <button type="button" class="profile-dropdown__item" data-logout>
+              <span class="material-symbols-outlined" aria-hidden="true">logout</span>
+              <span>로그아웃</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </header>
@@ -95,7 +107,7 @@
             <span class="material-symbols-outlined" aria-hidden="true">play_arrow</span>
             <span class="btn__label">재생</span>
           </button>
-          <button type="button" class="btn btn--info">
+          <button type="button" class="btn btn--info" data-open-detail>
             상세정보
           </button>
         </div>
@@ -472,6 +484,111 @@
       </div>
     </div>
   </footer>
+
+  <!-- 상세정보 모달 -->
+  <div class="detail" data-detail>
+    <div class="detail__backdrop" data-close-detail></div>
+    <div class="detail__dialog" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+      <button type="button" class="detail__close" aria-label="닫기" data-close-detail>
+        <span class="material-symbols-outlined" aria-hidden="true">close</span>
+      </button>
+
+      <div class="detail__hero">
+        <img src="https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/hero/background_desktop.webp" alt="" class="detail__hero-img">
+        <div class="detail__hero-fade"></div>
+        <div class="detail__hero-content">
+          <h2 class="detail__title" id="detailTitle">
+            <img src="https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/hero/hero_logo.webp" alt="제목">
+          </h2>
+          <div class="detail__actions">
+            <button type="button" class="btn btn--play detail__play">
+              <span class="material-symbols-outlined" aria-hidden="true">play_arrow</span>
+              <span class="btn__label">재생</span>
+            </button>
+            <button type="button" class="detail__icon-btn" aria-label="내가 찜한 콘텐츠">
+              <span class="material-symbols-outlined" aria-hidden="true">add</span>
+            </button>
+            <button type="button" class="detail__icon-btn" aria-label="좋아요">
+              <span class="material-symbols-outlined" aria-hidden="true">thumb_up</span>
+            </button>
+            <button type="button" class="detail__icon-btn detail__mute" aria-label="음소거">
+              <span class="material-symbols-outlined" aria-hidden="true">volume_off</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail__body">
+        <div class="detail__meta">
+          <div class="detail__meta-main">
+            <div class="detail__meta-row">
+              <span>연도</span>
+              <span>에피소드 n개</span>
+              <span class="detail__badge">HD</span>
+            </div>
+            <div class="detail__rating">연령</div>
+            <p class="detail__desc">
+              줄거리 텍스트를 입력하세요.
+            </p>
+          </div>
+          <div class="detail__meta-side">
+            <p><span class="detail__label">출연:</span> 출연진</p>
+            <p><span class="detail__label">장르:</span> 장르</p>
+            <p><span class="detail__label">시리즈 특징:</span> 특징</p>
+          </div>
+        </div>
+
+        <div class="detail__episodes">
+          <div class="detail__episodes-head">
+            <h3 class="detail__episodes-title">회차</h3>
+            <span class="detail__episodes-name">시리즈 제목</span>
+          </div>
+
+          <ul class="detail__episode-list">
+            <li class="detail__episode">
+              <span class="detail__episode-num">1</span>
+              <div class="detail__episode-thumb">
+                <img src="https://picsum.photos/seed/ep1/320/180" alt="">
+              </div>
+              <div class="detail__episode-info">
+                <div class="detail__episode-top">
+                  <span class="detail__episode-name">1화</span>
+                  <span class="detail__episode-runtime">시간</span>
+                </div>
+                <p class="detail__episode-desc">에피소드 설명을 입력하세요.</p>
+              </div>
+            </li>
+            <li class="detail__episode">
+              <span class="detail__episode-num">2</span>
+              <div class="detail__episode-thumb">
+                <img src="https://picsum.photos/seed/ep2/320/180" alt="">
+              </div>
+              <div class="detail__episode-info">
+                <div class="detail__episode-top">
+                  <span class="detail__episode-name">2화</span>
+                  <span class="detail__episode-runtime">시간</span>
+                </div>
+                <p class="detail__episode-desc">에피소드 설명을 입력하세요.</p>
+              </div>
+            </li>
+            <li class="detail__episode">
+              <span class="detail__episode-num">3</span>
+              <div class="detail__episode-thumb">
+                <img src="https://picsum.photos/seed/ep3/320/180" alt="">
+              </div>
+              <div class="detail__episode-info">
+                <div class="detail__episode-top">
+                  <span class="detail__episode-name">3화</span>
+                  <span class="detail__episode-runtime">시간</span>
+                </div>
+                <p class="detail__episode-desc">에피소드 설명을 입력하세요.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="js/script.js"></script>
 </body>

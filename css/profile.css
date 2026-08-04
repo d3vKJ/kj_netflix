@@ -1,0 +1,270 @@
+/* 계정 / 프로필 설정 페이지 */
+.account-page {
+  background-color: #fff;
+  color: #141414;
+  min-height: 100vh;
+}
+
+.account-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 68px;
+  background-color: #fff;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.account-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0 48px;
+}
+
+.account-header__logo-img {
+  width: 92px;
+  background: none;
+}
+
+.account-header .header__caret {
+  color: #141414;
+}
+
+.account {
+  display: flex;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 48px 80px;
+  gap: 48px;
+}
+
+.account__sidebar {
+  flex-shrink: 0;
+  width: 220px;
+}
+
+.account__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 28px;
+  font-size: 14px;
+  color: #6b6b6b;
+  transition: color 0.15s ease;
+}
+
+.account__back:hover {
+  color: #141414;
+}
+
+.account__back .material-symbols-outlined {
+  font-size: 20px;
+}
+
+.account__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.account__nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 10px;
+  font-size: 15px;
+  color: #6b6b6b;
+  border-radius: 6px;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.account__nav-item:hover {
+  color: #141414;
+  background-color: #f7f7f7;
+}
+
+.account__nav-item .material-symbols-outlined {
+  font-size: 22px;
+}
+
+.account__nav-item--active {
+  color: #141414;
+  font-weight: 700;
+}
+
+.account__main {
+  flex: 1;
+  min-width: 0;
+  max-width: 640px;
+}
+
+.account__title {
+  margin-bottom: 6px;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.account__subtitle {
+  margin-bottom: 28px;
+  font-size: 15px;
+  color: #6b6b6b;
+}
+
+.account__parental {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  margin-bottom: 32px;
+  padding: 18px 16px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  color: #141414;
+  transition: background-color 0.15s ease;
+}
+
+.account__parental:hover {
+  background-color: #f7f7f7;
+}
+
+.account__parental-icon {
+  flex-shrink: 0;
+  font-size: 28px;
+  color: #6b6b6b;
+}
+
+.account__parental-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.account__parental-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.account__parental-desc {
+  font-size: 13px;
+  color: #6b6b6b;
+}
+
+.account__parental > .material-symbols-outlined:last-child {
+  flex-shrink: 0;
+  font-size: 24px;
+  color: #8c8c8c;
+}
+
+.account__section-title {
+  margin-bottom: 12px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.account__profile-list {
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.account__profile-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 14px 16px;
+  color: #141414;
+  border-bottom: 1px solid #e5e5e5;
+  transition: background-color 0.15s ease;
+}
+
+.account__profile-list li:last-child .account__profile-item {
+  border-bottom: none;
+}
+
+.account__profile-item:hover {
+  background-color: #f7f7f7;
+}
+
+.account__profile-avatar {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: #e5e5e5;
+}
+
+.account__profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: none;
+}
+
+.account__profile-name {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.account__profile-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #0071eb;
+  background-color: #e6f2ff;
+  border-radius: 4px;
+}
+
+.account__profile-item > .material-symbols-outlined {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: 24px;
+  color: #8c8c8c;
+}
+
+/* 모바일 (≤768) */
+@media (max-width: 768px) {
+  .account-header__inner {
+    padding: 0 16px;
+  }
+
+  .account {
+    flex-direction: column;
+    padding: 24px 16px 64px;
+    gap: 28px;
+  }
+
+  .account__sidebar {
+    width: 100%;
+  }
+
+  .account__nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .account__nav-item {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .account__title {
+    font-size: 26px;
+  }
+
+  .account__parental {
+    padding: 14px 12px;
+  }
+
+  .account__parental-desc {
+    font-size: 12px;
+  }
+}

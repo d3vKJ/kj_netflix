@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>프로필 — NETFLIX</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=block">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/profile.css">
+  <script src="https://code.jquery.com/jquery-4.0.0.min.js"></script>
+</head>
+<body class="account-page">
+  <header class="account-header">
+    <div class="account-header__inner">
+      <a href="index.html" class="account-header__logo" aria-label="Netflix">
+        <img src="https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/netflix-logo.png" alt="NETFLIX" class="account-header__logo-img">
+      </a>
+
+      <div class="header__profile-wrap">
+        <button type="button" class="header__profile" aria-label="프로필" aria-expanded="false" aria-haspopup="true" data-profile-toggle>
+          <span class="header__avatar">
+            <img src="https://picsum.photos/seed/netflix-user/128/128" alt="프로필 이미지">
+          </span>
+          <span class="material-symbols-outlined header__caret" aria-hidden="true">arrow_drop_down</span>
+        </button>
+        <div class="profile-dropdown" data-profile-dropdown>
+          <a href="profile.html" class="profile-dropdown__item">
+            <span class="material-symbols-outlined" aria-hidden="true">manage_accounts</span>
+            <span>프로필 설정</span>
+          </a>
+          <button type="button" class="profile-dropdown__item" data-logout>
+            <span class="material-symbols-outlined" aria-hidden="true">logout</span>
+            <span>로그아웃</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="account">
+    <aside class="account__sidebar">
+      <a href="index.html" class="account__back">
+        <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+        <span>넷플릭스로 돌아가기</span>
+      </a>
+
+      <nav class="account__nav" aria-label="계정 메뉴">
+        <a href="#" class="account__nav-item">
+          <span class="material-symbols-outlined" aria-hidden="true">home</span>
+          <span>개요</span>
+        </a>
+        <a href="#" class="account__nav-item">
+          <span class="material-symbols-outlined" aria-hidden="true">credit_card</span>
+          <span>멤버십</span>
+        </a>
+        <a href="#" class="account__nav-item">
+          <span class="material-symbols-outlined" aria-hidden="true">shield</span>
+          <span>보안</span>
+        </a>
+        <a href="#" class="account__nav-item">
+          <span class="material-symbols-outlined" aria-hidden="true">devices</span>
+          <span>디바이스</span>
+        </a>
+        <a href="profile.html" class="account__nav-item account__nav-item--active" aria-current="page">
+          <span class="material-symbols-outlined" aria-hidden="true">face</span>
+          <span>프로필</span>
+        </a>
+      </nav>
+    </aside>
+
+    <main class="account__main">
+      <h1 class="account__title">프로필</h1>
+      <p class="account__subtitle">자녀 보호 기능 및 접근 권한</p>
+
+      <a href="#" class="account__parental">
+        <span class="material-symbols-outlined account__parental-icon" aria-hidden="true">info</span>
+        <span class="account__parental-text">
+          <span class="account__parental-title">자녀 보호 설정 조정</span>
+          <span class="account__parental-desc">관람등급 설정, 콘텐츠 차단</span>
+        </span>
+        <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+      </a>
+
+      <h2 class="account__section-title">프로필 설정</h2>
+
+      <ul class="account__profile-list">
+        <li>
+          <a href="#" class="account__profile-item">
+            <span class="account__profile-avatar">
+              <img src="https://picsum.photos/seed/nf-p1/80/80" alt="">
+            </span>
+            <span class="account__profile-name">프로필 1</span>
+            <span class="account__profile-badge">지금 시청 중</span>
+            <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="account__profile-item">
+            <span class="account__profile-avatar">
+              <img src="https://picsum.photos/seed/nf-p2/80/80" alt="">
+            </span>
+            <span class="account__profile-name">프로필 2</span>
+            <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="account__profile-item">
+            <span class="account__profile-avatar">
+              <img src="https://picsum.photos/seed/nf-p3/80/80" alt="">
+            </span>
+            <span class="account__profile-name">프로필 3</span>
+            <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="account__profile-item">
+            <span class="account__profile-avatar">
+              <img src="https://picsum.photos/seed/nf-p4/80/80" alt="">
+            </span>
+            <span class="account__profile-name">프로필 4</span>
+            <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+          </a>
+        </li>
+      </ul>
+    </main>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
