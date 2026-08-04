@@ -195,6 +195,7 @@ button {
   overflow: hidden;
 }
 
+
 .hero__bg {
   position: absolute;
   top: 0;
@@ -203,11 +204,66 @@ button {
   height: 100%;
 }
 
+.hero__bg picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .hero__image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 20%;
+  object-position: center center;
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
+
+.hero__video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+  background-color: #000;
+}
+
+.hero.is-playing .hero__image {
+  opacity: 0;
+}
+
+.hero.is-playing .hero__video {
+  opacity: 1;
+}
+
+.hero.is-playing .hero__desc {
+  opacity: 0;
+  visibility: hidden;
+  max-height: 0;
+  margin: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hero.is-playing .hero__content {
+  bottom: 6%;
+}
+
+.hero.is-playing .hero__controls {
+  bottom: 6%;
+}
+
+.hero.is-playing .hero__title img {
+  width: min(100%, 280px);
+}
+
+.hero__desc {
+  transition: opacity 0.45s ease, visibility 0.45s ease, max-height 0.45s ease, margin 0.45s ease;
 }
 
 .hero__overlay {
@@ -226,6 +282,7 @@ button {
   bottom: 20%;
   z-index: 2;
   max-width: 500px;
+  transition: bottom 0.55s ease;
 }
 
 .hero__title {
@@ -236,9 +293,10 @@ button {
 
 .hero__title img {
   display: block;
-  width: min(100%, 200px);
+  width: min(100%, 400px);
   height: auto;
   background-color: transparent;
+  transition: width 0.55s ease;
 }
 
 .hero__meta {
@@ -246,9 +304,10 @@ button {
   align-items: center;
   flex-wrap: wrap;
   gap: 6px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
-  color: #b3b3b3;
+  color: #f9f9f9;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
   margin-bottom: 12px;
 }
 
@@ -258,6 +317,7 @@ button {
   border: 1px solid #b3b3b3;
   font-size: 12px;
   color: #fff;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
 }
 
 .hero__desc {
@@ -267,44 +327,71 @@ button {
 
 .hero__btns {
   display: flex;
+  align-items: center;
   gap: 12px;
 }
 
 .btn {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 24px;
-  border-radius: 4px;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 28px;
+  border: none;
+  border-radius: 50px;
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
 }
 
 .btn .material-symbols-outlined {
-  font-size: 28px;
+  font-size: 32px;
   line-height: 1;
 }
 
 .btn--play .material-symbols-outlined {
-  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+  font-variation-settings: "FILL" 1, "wght" 700, "GRAD" 0, "opsz" 24;
+  margin-left: -4px;
+  color: currentColor;
+  font-size: 34px;
 }
 
 .btn--play {
-  background-color: #fff;
+  background-color: #ffffff;
   color: #000;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  font-size: 18px;
 }
 
 .btn--play:hover {
-  opacity: 0.85;
+  background-color: rgba(255, 255, 255, 0.75);
+}
+
+.btn--play:active {
+  background-color: rgba(255, 255, 255, 0.65);
+  transform: scale(0.98);
 }
 
 .btn--info {
   background-color: rgba(109, 109, 110, 0.7);
   color: #fff;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  text-align: center;
+  backdrop-filter: blur(4px);
 }
 
 .btn--info:hover {
-  background-color: rgba(109, 109, 110, 0.5);
+  background-color: rgba(109, 109, 110, 0.4);
+}
+
+.btn--info:active {
+  background-color: rgba(109, 109, 110, 0.35);
+  transform: scale(0.98);
 }
 
 .hero__arrow {
@@ -337,11 +424,18 @@ button {
   right: 8px;
 }
 
-.hero__mute {
+.hero__controls {
   position: absolute;
   right: 60px;
   bottom: 18%;
   z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: bottom 0.55s ease;
+}
+
+.hero__ctrl {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -352,9 +446,18 @@ button {
   background-color: rgba(0, 0, 0, 0.35);
 }
 
-.hero__mute .material-symbols-outlined {
+.hero__ctrl[hidden] {
+  display: none;
+}
+
+.hero__ctrl .material-symbols-outlined {
   font-size: 22px;
   line-height: 1;
+}
+
+.hero.is-paused .hero__pause {
+  border-color: #fff;
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 /* 콘텐츠 행 */
@@ -666,16 +769,16 @@ button {
     min-height: 420px;
   }
 
-  .hero__image {
-    object-position: 60% 20%;
-  }
-
   .hero__title {
     font-size: 36px;
   }
 
   .hero__title img {
     width: min(100%, 170px);
+  }
+
+  .hero.is-playing .hero__title img {
+    width: min(100%, 130px);
   }
 
   .hero__meta {
@@ -699,7 +802,7 @@ button {
     font-size: 24px;
   }
 
-  .hero__mute {
+  .hero__controls {
     right: 32px;
   }
 
@@ -771,14 +874,19 @@ button {
     min-height: 340px;
   }
 
-  .hero__image {
-    object-position: 70% 25%;
-  }
-
   .hero__content {
     left: 16px;
     bottom: 14%;
     max-width: 90%;
+  }
+
+  .hero.is-playing .hero__content,
+  .hero.is-playing .hero__controls {
+    bottom: 5%;
+  }
+
+  .hero.is-playing .hero__title img {
+    width: min(100%, 110px);
   }
 
   .hero__title {
@@ -820,14 +928,17 @@ button {
     font-size: 36px;
   }
 
-  .hero__mute {
+  .hero__controls {
     right: 16px;
     bottom: 14%;
+  }
+
+  .hero__ctrl {
     width: 36px;
     height: 36px;
   }
 
-  .hero__mute .material-symbols-outlined {
+  .hero__ctrl .material-symbols-outlined {
     font-size: 18px;
   }
 

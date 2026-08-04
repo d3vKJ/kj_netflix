@@ -1,39 +1,228 @@
-(function () {
-  const header = document.querySelector(".header");
-  const back_top = document.getElementById("backTop");
+$(function () {
+  const $header = $(".header");
+  const $back_top = $("#backTop");
 
-  if (header && back_top) {
+  if ($header.length && $back_top.length) {
     const on_scroll = function () {
-      const y = window.scrollY;
+      const y = $(window).scrollTop();
 
-      if (y > 40) {
-        header.classList.add("header--scrolled");
-      } else {
-        header.classList.remove("header--scrolled");
-      }
-
-      if (y > 400) {
-        back_top.classList.add("is-visible");
-      } else {
-        back_top.classList.remove("is-visible");
-      }
+      $header.toggleClass("header--scrolled", y > 40);
+      $back_top.toggleClass("is-visible", y > 400);
     };
 
-    window.addEventListener("scroll", on_scroll, { passive: true });
+    $(window).on("scroll", on_scroll);
     on_scroll();
 
-    back_top.addEventListener("click", function () {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+    $back_top.on("click", function () {
+      $("html, body").animate({ scrollTop: 0 }, 400);
     });
   }
 
-  // 가로 행 드래그 스크롤
+  // 히어로 섹션 사진비됴
+  const $hero = $(".hero");
+  const $hero_video = $hero.find(".hero__video");
+  const $hero_play_btn = $hero.find("[data-hero-play]");
+  const $hero_pause_btn = $hero.find("[data-hero-pause]");
+  const $hero_mute_btn = $hero.find("[data-hero-mute]");
+  const hero_video = $hero_video.get(0);
+  const FADE_MS = 600;
+  const AUTO_PLAY_DELAY = 2000;
+  const SCROLL_STOP_Y = 80;
+  let hero_fade_timer = null;
+  let hero_autoplay_timer = null;
+  let hero_is_playing = false;
+  let hero_is_paused = false;
+
+  if ($hero.length && hero_video && $hero_play_btn.length && $hero_pause_btn.length && $hero_mute_btn.length) {
+    const $mute_icon = $hero_mute_btn.find(".material-symbols-outlined");
+    const $pause_icon = $hero_pause_btn.find(".material-symbols-outlined");
+
+    const clear_fade_timer = function () {
+      if (!hero_fade_timer) return;
+      clearTimeout(hero_fade_timer);
+      hero_fade_timer = null;
+    };
+
+    const clear_autoplay_timer = function () {
+      if (!hero_autoplay_timer) return;
+      clearTimeout(hero_autoplay_timer);
+      hero_autoplay_timer = null;
+    };
+
+    const is_hero_in_view = function () {
+      return $(window).scrollTop() <= SCROLL_STOP_Y;
+    };
+
+    const sync_mute_ui = function () {
+      if (hero_video.muted) {
+        $mute_icon.text("volume_off");
+        $hero_mute_btn.attr("aria-label", "소리 켜기");
+      } else {
+        $mute_icon.text("volume_up");
+        $hero_mute_btn.attr("aria-label", "음소거");
+      }
+    };
+
+    const set_controls_ui = function (playing) {
+      if (playing) {
+        $hero_pause_btn.prop("hidden", false);
+        $hero_mute_btn.prop("hidden", false);
+        $pause_icon.text("pause");
+        $hero_pause_btn.attr("aria-label", "일시정지");
+        $hero.removeClass("is-paused");
+        return;
+      }
+
+      if (hero_is_paused) {
+        $hero_pause_btn.prop("hidden", false);
+        $hero_mute_btn.prop("hidden", true);
+        $pause_icon.text("play_arrow");
+        $hero_pause_btn.attr("aria-label", "이어서 재생");
+        $hero.addClass("is-paused");
+        return;
+      }
+
+      $hero_pause_btn.prop("hidden", true);
+      $hero_mute_btn.prop("hidden", true);
+      $pause_icon.text("pause");
+      $hero_pause_btn.attr("aria-label", "일시정지");
+      $hero.removeClass("is-paused");
+    };
+
+    const start_playback = function () {
+      clear_fade_timer();
+      clear_autoplay_timer();
+
+      const play_promise = hero_video.play();
+
+      if (play_promise && typeof play_promise.then === "function") {
+        play_promise
+          .then(function () {
+            hero_is_playing = true;
+            hero_is_paused = false;
+            $hero.addClass("is-playing");
+            set_controls_ui(true);
+          })
+          .catch(function () {
+            show_image(true);
+            schedule_autoplay();
+          });
+        return;
+      }
+
+      hero_is_playing = true;
+      hero_is_paused = false;
+      $hero.addClass("is-playing");
+      set_controls_ui(true);
+    };
+
+    const show_image = function (reset) {
+      clear_fade_timer();
+      clear_autoplay_timer();
+
+      hero_is_playing = false;
+      $hero.removeClass("is-playing");
+      hero_video.pause();
+      set_controls_ui(false);
+
+      if (!reset) return;
+
+      hero_fade_timer = setTimeout(function () {
+        hero_video.currentTime = 0;
+        hero_fade_timer = null;
+      }, FADE_MS);
+    };
+
+    const schedule_autoplay = function () {
+      clear_autoplay_timer();
+      if (hero_is_paused || hero_is_playing) return;
+      if (!is_hero_in_view()) return;
+
+      hero_autoplay_timer = setTimeout(function () {
+        hero_autoplay_timer = null;
+        if (hero_is_paused || hero_is_playing) return;
+        if (!is_hero_in_view()) return;
+        play_video();
+      }, AUTO_PLAY_DELAY);
+    };
+
+    const play_video = function () {
+      if (hero_is_paused) return;
+      if (!is_hero_in_view()) return;
+
+      hero_video.muted = true;
+      sync_mute_ui();
+      start_playback();
+    };
+
+    const pause_video = function () {
+      hero_is_paused = true;
+      show_image(false);
+    };
+
+    const resume_video = function () {
+      if (!hero_is_paused) return;
+      if (!is_hero_in_view()) return;
+      start_playback();
+    };
+
+    const stop_on_scroll = function () {
+      clear_autoplay_timer();
+      if (!hero_is_playing) return;
+      hero_is_paused = false;
+      show_image(true);
+    };
+
+    $(window).on("scroll.heroVideo", function () {
+      if (!is_hero_in_view()) {
+        stop_on_scroll();
+        return;
+      }
+
+      if (!hero_is_playing && !hero_is_paused && !hero_autoplay_timer) {
+        schedule_autoplay();
+      }
+    });
+
+    $hero_play_btn.on("click", function () {
+      if (hero_is_playing || hero_is_paused) return;
+      play_video();
+    });
+
+    $hero_pause_btn.on("click", function () {
+      if (hero_is_playing) {
+        pause_video();
+        return;
+      }
+
+      if (hero_is_paused) {
+        resume_video();
+      }
+    });
+
+    $hero_mute_btn.on("click", function () {
+      if (!hero_is_playing) return;
+      hero_video.muted = !hero_video.muted;
+      sync_mute_ui();
+    });
+
+    $hero_video.on("ended", function () {
+      hero_is_paused = false;
+      show_image(true);
+      schedule_autoplay();
+    });
+
+    set_controls_ui(false);
+    sync_mute_ui();
+    schedule_autoplay();
+  }
+
+  // 드래그스크롤
   const DRAG_THRESHOLD = 8;
-  const tracks = document.querySelectorAll(".row__track");
 
-  tracks.forEach(function (track) {
-    if (!track) return;
-
+  $(".row__track").each(function () {
+    const $track = $(this);
+    const track = this;
     let pointer_id = null;
     let is_dragging = false;
     let block_click = false;
@@ -43,24 +232,24 @@
     const reset_drag = function () {
       pointer_id = null;
       is_dragging = false;
-      track.classList.remove("is-dragging");
+      $track.removeClass("is-dragging");
     };
 
-    track.addEventListener("pointerdown", function (e) {
+    $track.on("pointerdown", function (e) {
       if (e.button !== 0) return;
       if (pointer_id !== null) return;
 
-      pointer_id = e.pointerId;
+      pointer_id = e.originalEvent.pointerId;
       is_dragging = false;
       block_click = false;
       start_x = e.clientX;
       scroll_left = track.scrollLeft;
 
-      track.setPointerCapture(e.pointerId);
+      track.setPointerCapture(e.originalEvent.pointerId);
     });
 
-    track.addEventListener("pointermove", function (e) {
-      if (pointer_id !== e.pointerId) return;
+    $track.on("pointermove", function (e) {
+      if (pointer_id !== e.originalEvent.pointerId) return;
 
       const walk = e.clientX - start_x;
 
@@ -68,7 +257,7 @@
         if (Math.abs(walk) < DRAG_THRESHOLD) return;
         is_dragging = true;
         block_click = true;
-        track.classList.add("is-dragging");
+        $track.addClass("is-dragging");
       }
 
       e.preventDefault();
@@ -76,20 +265,17 @@
     });
 
     const on_pointer_end = function (e) {
-      if (pointer_id !== e.pointerId) return;
+      if (pointer_id !== e.originalEvent.pointerId) return;
 
-      if (track.hasPointerCapture(e.pointerId)) {
-        track.releasePointerCapture(e.pointerId);
+      if (track.hasPointerCapture(e.originalEvent.pointerId)) {
+        track.releasePointerCapture(e.originalEvent.pointerId);
       }
 
       reset_drag();
     };
 
-    track.addEventListener("pointerup", on_pointer_end);
-    track.addEventListener("pointercancel", on_pointer_end);
-    track.addEventListener("lostpointercapture", function () {
-      reset_drag();
-    });
+    $track.on("pointerup pointercancel", on_pointer_end);
+    $track.on("lostpointercapture", reset_drag);
 
     track.addEventListener("click", function (e) {
       if (!block_click) return;
@@ -98,8 +284,6 @@
       block_click = false;
     }, true);
 
-    track.querySelectorAll("img, a").forEach(function (el) {
-      el.setAttribute("draggable", "false");
-    });
+    $track.find("img, a").attr("draggable", "false");
   });
-})();
+});
