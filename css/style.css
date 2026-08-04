@@ -191,7 +191,7 @@ button {
   position: relative;
   width: 100%;
   height: 80vh;
-  min-height: 400px;
+  min-height: 480px;
   overflow: hidden;
 }
 
@@ -207,6 +207,7 @@ button {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 20%;
 }
 
 .hero__overlay {
@@ -407,7 +408,6 @@ button {
     / var(--top10-visible)
   );
   box-sizing: border-box;
-  min-height: 340px;
   padding: 48px var(--top10-pad) 24px;
   column-gap: var(--top10-gap);
   align-items: end;
@@ -418,7 +418,9 @@ button {
 .top10-card {
   position: relative;
   width: 100%;
-  height: 280px;
+  height: auto;
+  /* 포스터 68% · 2:3 → 카드 전체 비율 */
+  aspect-ratio: 100 / 102;
 }
 
 .top10-card__num {
@@ -639,7 +641,118 @@ button {
   margin-top: 16px;
 }
 
-/* 모바일 */
+/* 태블릿 (≤1024) — 데스크톱과 모바일 사이 중간 스케일 */
+@media (max-width: 1024px) {
+  .header__inner {
+    padding: 0 32px;
+    gap: 20px;
+  }
+
+  .header__logo-img {
+    width: 80px;
+  }
+
+  .header__link {
+    font-size: 13px;
+  }
+
+  .hero__content {
+    left: 32px;
+    max-width: 420px;
+  }
+
+  .hero {
+    height: 70vh;
+    min-height: 420px;
+  }
+
+  .hero__image {
+    object-position: 60% 20%;
+  }
+
+  .hero__title {
+    font-size: 36px;
+  }
+
+  .hero__title img {
+    width: min(100%, 170px);
+  }
+
+  .hero__meta {
+    font-size: 13px;
+  }
+
+  .hero__badge {
+    font-size: 11px;
+  }
+
+  .hero__desc {
+    font-size: 16px;
+  }
+
+  .btn {
+    font-size: 15px;
+    padding: 7px 20px;
+  }
+
+  .btn .material-symbols-outlined {
+    font-size: 24px;
+  }
+
+  .hero__mute {
+    right: 32px;
+  }
+
+  .row__title {
+    font-size: 18px;
+    padding: 0 32px;
+  }
+
+  .row__track {
+    padding: 32px 32px 12px;
+  }
+
+  .row--top10 {
+    margin-top: -44px;
+  }
+
+  .row__track--top10 {
+    --top10-pad: 32px;
+    --top10-gap: 40px;
+    --top10-visible: 3;
+    padding: 40px var(--top10-pad) 20px;
+  }
+
+  .card {
+    width: calc((100% - 48px) / 4);
+  }
+
+  .card__badge {
+    font-size: 10px;
+  }
+
+  .card__label {
+    font-size: 11px;
+  }
+
+  .card__genre {
+    font-size: 16px;
+  }
+
+  .footer {
+    padding: 44px 32px 56px;
+  }
+
+  .footer__links a {
+    font-size: 13px;
+  }
+
+  .footer__info {
+    font-size: 12px;
+  }
+}
+
+/* 모바일 (≤768) */
 @media (max-width: 768px) {
   .header__inner {
     padding: 0 16px;
@@ -654,12 +767,17 @@ button {
   }
 
   .hero {
-    height: 60vh;
+    height: 56vh;
+    min-height: 340px;
+  }
+
+  .hero__image {
+    object-position: 70% 25%;
   }
 
   .hero__content {
     left: 16px;
-    bottom: 12%;
+    bottom: 14%;
     max-width: 90%;
   }
 
@@ -671,8 +789,46 @@ button {
     width: min(100%, 140px);
   }
 
+  .hero__meta {
+    font-size: 12px;
+  }
+
+  .hero__badge {
+    font-size: 10px;
+  }
+
+  .hero__desc {
+    font-size: 14px;
+  }
+
+  .btn {
+    font-size: 14px;
+    padding: 6px 16px;
+  }
+
+  .btn .material-symbols-outlined {
+    font-size: 22px;
+  }
+
+  .hero__arrow {
+    width: 36px;
+    height: 36px;
+    margin-top: -18px;
+  }
+
+  .hero__arrow .material-symbols-outlined {
+    font-size: 36px;
+  }
+
   .hero__mute {
     right: 16px;
+    bottom: 14%;
+    width: 36px;
+    height: 36px;
+  }
+
+  .hero__mute .material-symbols-outlined {
+    font-size: 18px;
   }
 
   .row {
@@ -680,6 +836,7 @@ button {
   }
 
   .row__title {
+    font-size: 16px;
     padding: 0 16px;
   }
 
@@ -695,30 +852,19 @@ button {
     --top10-pad: 16px;
     --top10-gap: 24px;
     --top10-visible: 2;
-    min-height: 240px;
     padding: 36px var(--top10-pad) 16px;
-  }
-
-  .top10-card {
-    height: 190px;
-  }
-
-  .top10-card__num {
-    width: 36%;
-    height: 90%;
-  }
-
-  .top10-card__num--10 {
-    width: 42%;
-  }
-
-  .top10-card__poster {
-    width: 68%;
-    height: 100%;
   }
 
   .card {
     width: calc((100% - 16px) / 2);
+  }
+
+  .card__badge {
+    font-size: 9px;
+  }
+
+  .card__label {
+    font-size: 10px;
   }
 
   .card__genre {
@@ -738,5 +884,13 @@ button {
 
   .footer__links ul {
     flex: 0 0 45%;
+  }
+
+  .footer__links a {
+    font-size: 12px;
+  }
+
+  .footer__info {
+    font-size: 11px;
   }
 }
