@@ -557,14 +557,14 @@ button {
 .row__title {
   font-size: 20px;
   font-weight: bold;
-  margin-bottom: 12px;
+  margin-bottom: 4px;
   padding: 0 60px;
 }
 
 .row__track {
   display: flex;
   gap: 16px;
-  padding: 32px 60px 12px;
+  padding: 8px 60px 12px;
   overflow-x: auto;
   overflow-y: hidden;
   cursor: grab;
@@ -579,9 +579,10 @@ button {
   cursor: grabbing;
 }
 
-/* Top 10 — 한 화면 5칸, 스크롤로 6~10 */
+/* 탑텐 */
 .row--top10 {
-  margin-top: -60px;
+  margin-top: -16px;
+  padding-top: 24px;
   overflow: hidden;
 }
 
@@ -596,7 +597,7 @@ button {
     / var(--top10-visible)
   );
   box-sizing: border-box;
-  padding: 48px var(--top10-pad) 24px;
+  padding: 8px var(--top10-pad) 24px;
   column-gap: var(--top10-gap);
   align-items: end;
   overflow-x: auto;
@@ -607,7 +608,6 @@ button {
   position: relative;
   width: 100%;
   height: auto;
-  /* 포스터 68% · 2:3 → 카드 전체 비율 */
   aspect-ratio: 100 / 102;
 }
 
@@ -822,6 +822,7 @@ button {
 
 .footer__info {
   font-size: 12px;
+  font-style: normal;
   line-height: 1.7;
 }
 
@@ -829,7 +830,7 @@ button {
   margin-top: 16px;
 }
 
-/* 상세정보 모달 */
+/* 상세정보 */
 .detail {
   position: fixed;
   inset: 0;
@@ -917,6 +918,7 @@ button {
   position: relative;
   aspect-ratio: 16 / 9;
   background-color: #000;
+  overflow: hidden;
 }
 
 .detail__hero-img {
@@ -924,6 +926,34 @@ button {
   height: 100%;
   object-fit: cover;
   background: none;
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
+
+.detail__hero-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+  background-color: #000;
+}
+
+.detail__hero.is-playing .detail__hero-img {
+  opacity: 0;
+}
+
+.detail__hero.is-playing .detail__hero-video {
+  opacity: 1;
+}
+
+.detail__hero.is-playing {
+  cursor: pointer;
 }
 
 .detail__hero-fade {
@@ -1110,6 +1140,7 @@ button {
 }
 
 .detail__episode-thumb {
+  position: relative;
   flex-shrink: 0;
   width: 140px;
   aspect-ratio: 16 / 9;
@@ -1123,6 +1154,30 @@ button {
   height: 100%;
   object-fit: cover;
   background: none;
+}
+
+.detail__episode-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.detail__episode-play .material-symbols-outlined {
+  font-size: 40px;
+  color: #fff;
+  font-variation-settings: "FILL" 1;
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.6));
+}
+
+.detail__episode-thumb:hover .detail__episode-play,
+.detail__episode:hover .detail__episode-play {
+  opacity: 1;
 }
 
 .detail__episode-info {
@@ -1159,7 +1214,7 @@ body.detail-open {
   overflow: hidden;
 }
 
-/* 태블릿 (≤1024) — 데스크톱과 모바일 사이 중간 스케일 */
+/* 탭 */
 @media (max-width: 1024px) {
   .header__inner {
     position: relative;
@@ -1175,7 +1230,6 @@ body.detail-open {
     display: flex;
   }
 
-  /* 메뉴 열림 시 헤더·패널 동일 배경으로 이어짐 */
   .header:has(.header__nav.is-open) {
     background: rgba(0, 0, 0, 0.95);
   }
@@ -1281,18 +1335,19 @@ body.detail-open {
   }
 
   .row__track {
-    padding: 32px 32px 12px;
+    padding: 8px 32px 12px;
   }
 
   .row--top10 {
-    margin-top: -44px;
+    margin-top: -8px;
+    padding-top: 20px;
   }
 
   .row__track--top10 {
     --top10-pad: 32px;
     --top10-gap: 40px;
     --top10-visible: 3;
-    padding: 40px var(--top10-pad) 20px;
+    padding: 8px var(--top10-pad) 20px;
   }
 
   .card {
@@ -1324,7 +1379,7 @@ body.detail-open {
   }
 }
 
-/* 모바일 (≤768) */
+/* 폰 */
 @media (max-width: 768px) {
   .header__inner {
     padding: 0 16px;
@@ -1426,18 +1481,19 @@ body.detail-open {
   }
 
   .row__track {
-    padding: 32px 16px 12px;
+    padding: 8px 16px 12px;
   }
 
   .row--top10 {
-    margin-top: -32px;
+    margin-top: 0;
+    padding-top: 16px;
   }
 
   .row__track--top10 {
     --top10-pad: 16px;
     --top10-gap: 24px;
     --top10-visible: 2;
-    padding: 36px var(--top10-pad) 16px;
+    padding: 8px var(--top10-pad) 16px;
   }
 
   .card {

@@ -19,11 +19,11 @@
       <div class="header__profile-wrap">
         <button type="button" class="header__profile" aria-label="프로필" aria-expanded="false" aria-haspopup="true" data-profile-toggle>
           <span class="header__avatar">
-            <img src="https://picsum.photos/seed/netflix-user/128/128" alt="프로필 이미지">
+            <img src="https://picsum.photos/seed/netflix-user/128/128" alt="현재 프로필 이미지">
           </span>
           <span class="material-symbols-outlined header__caret" aria-hidden="true">arrow_drop_down</span>
         </button>
-        <div class="profile-dropdown" data-profile-dropdown>
+        <nav class="profile-dropdown" aria-label="프로필 메뉴" data-profile-dropdown>
           <a href="profile.html" class="profile-dropdown__item">
             <span class="material-symbols-outlined" aria-hidden="true">manage_accounts</span>
             <span>프로필 설정</span>
@@ -32,7 +32,7 @@
             <span class="material-symbols-outlined" aria-hidden="true">logout</span>
             <span>로그아웃</span>
           </button>
-        </div>
+        </nav>
       </div>
     </div>
   </header>
@@ -81,47 +81,49 @@
         <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
       </a>
 
-      <h2 class="account__section-title">프로필 설정</h2>
+      <section class="account__profiles" aria-labelledby="profile-settings-title">
+        <h2 class="account__section-title" id="profile-settings-title">프로필 설정</h2>
 
-      <ul class="account__profile-list">
-        <li>
-          <a href="#" class="account__profile-item">
-            <span class="account__profile-avatar">
-              <img src="https://picsum.photos/seed/nf-p1/80/80" alt="">
-            </span>
-            <span class="account__profile-name">프로필 1</span>
-            <span class="account__profile-badge">지금 시청 중</span>
-            <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
-          </a>
-        </li>
-        <li>
-          <a href="#" class="account__profile-item">
-            <span class="account__profile-avatar">
-              <img src="https://picsum.photos/seed/nf-p2/80/80" alt="">
-            </span>
-            <span class="account__profile-name">프로필 2</span>
-            <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
-          </a>
-        </li>
-        <li>
-          <a href="#" class="account__profile-item">
-            <span class="account__profile-avatar">
-              <img src="https://picsum.photos/seed/nf-p3/80/80" alt="">
-            </span>
-            <span class="account__profile-name">프로필 3</span>
-            <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
-          </a>
-        </li>
-        <li>
-          <a href="#" class="account__profile-item">
-            <span class="account__profile-avatar">
-              <img src="https://picsum.photos/seed/nf-p4/80/80" alt="">
-            </span>
-            <span class="account__profile-name">프로필 4</span>
-            <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
-          </a>
-        </li>
-      </ul>
+        <ul class="account__profile-list">
+          <li>
+            <a href="#" class="account__profile-item">
+              <span class="account__profile-avatar">
+                <img src="https://picsum.photos/seed/nf-p1/80/80" alt="프로필 1 아바타">
+              </span>
+              <span class="account__profile-name">프로필 1</span>
+              <span class="account__profile-badge">지금 시청 중</span>
+              <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="account__profile-item">
+              <span class="account__profile-avatar">
+                <img src="https://picsum.photos/seed/nf-p2/80/80" alt="프로필 2 아바타">
+              </span>
+              <span class="account__profile-name">프로필 2</span>
+              <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="account__profile-item">
+              <span class="account__profile-avatar">
+                <img src="https://picsum.photos/seed/nf-p3/80/80" alt="프로필 3 아바타">
+              </span>
+              <span class="account__profile-name">프로필 3</span>
+              <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="account__profile-item">
+              <span class="account__profile-avatar">
+                <img src="https://picsum.photos/seed/nf-p4/80/80" alt="프로필 4 아바타">
+              </span>
+              <span class="account__profile-name">프로필 4</span>
+              <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+            </a>
+          </li>
+        </ul>
+      </section>
     </main>
   </div>
 

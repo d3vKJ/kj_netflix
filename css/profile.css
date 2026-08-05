@@ -1,4 +1,4 @@
-/* 계정 / 프로필 설정 페이지 */
+/* vmfhvlf */
 .account-page {
   background-color: #fff;
   color: #141414;
@@ -229,7 +229,7 @@
   color: #8c8c8c;
 }
 
-/* 모바일 (≤768) */
+/* 폰 */
 @media (max-width: 768px) {
   .account-header__inner {
     padding: 0 16px;

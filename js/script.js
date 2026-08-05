@@ -1,6 +1,6 @@
 $(function () {
   const $header = $(".header");
-  const $back_top = $("#backTop");
+  const $back_top = $("#back-top");
 
   if ($header.length && $back_top.length) {
     const on_scroll = function () {
@@ -384,14 +384,134 @@ $(function () {
 
   // 상세정보 모달
   const $detail = $("[data-detail]");
+  const $detail_hero = $detail.find(".detail__hero");
+  const $detail_video = $detail.find(".detail__hero-video");
+  const $detail_play_btn = $detail.find("[data-detail-play]");
+  const $detail_mute_btn = $detail.find("[data-detail-mute]");
+  const detail_video = $detail_video.get(0);
+  const DETAIL_AUTO_PLAY_DELAY = 2000;
+  let detail_fade_timer = null;
+  let detail_autoplay_timer = null;
+  let detail_is_playing = false;
+  let detail_is_paused = false;
 
   if ($detail.length) {
+    const $detail_mute_icon = $detail_mute_btn.find(".material-symbols-outlined");
+
+    const clear_detail_fade_timer = function () {
+      if (!detail_fade_timer) return;
+      clearTimeout(detail_fade_timer);
+      detail_fade_timer = null;
+    };
+
+    const clear_detail_autoplay_timer = function () {
+      if (!detail_autoplay_timer) return;
+      clearTimeout(detail_autoplay_timer);
+      detail_autoplay_timer = null;
+    };
+
+    const sync_detail_mute_ui = function () {
+      if (!detail_video) return;
+
+      if (detail_video.muted) {
+        $detail_mute_icon.text("volume_off");
+        $detail_mute_btn.attr("aria-label", "소리 켜기");
+      } else {
+        $detail_mute_icon.text("volume_up");
+        $detail_mute_btn.attr("aria-label", "음소거");
+      }
+    };
+
+    const start_detail_playback = function () {
+      if (!detail_video) return;
+
+      clear_detail_fade_timer();
+      clear_detail_autoplay_timer();
+
+      const play_promise = detail_video.play();
+
+      if (play_promise && typeof play_promise.then === "function") {
+        play_promise
+          .then(function () {
+            detail_is_playing = true;
+            detail_is_paused = false;
+            $detail_hero.addClass("is-playing");
+          })
+          .catch(function () {
+            show_detail_image(true);
+          });
+        return;
+      }
+
+      detail_is_playing = true;
+      detail_is_paused = false;
+      $detail_hero.addClass("is-playing");
+    };
+
+    const show_detail_image = function (reset) {
+      if (!detail_video) return;
+
+      clear_detail_fade_timer();
+      clear_detail_autoplay_timer();
+
+      detail_is_playing = false;
+      $detail_hero.removeClass("is-playing");
+      detail_video.pause();
+
+      if (!reset) return;
+
+      detail_fade_timer = setTimeout(function () {
+        detail_video.currentTime = 0;
+        detail_fade_timer = null;
+      }, FADE_MS);
+    };
+
+    const play_detail_video = function () {
+      if (!detail_video) return;
+      if (detail_is_paused) return;
+
+      detail_video.muted = true;
+      sync_detail_mute_ui();
+      start_detail_playback();
+    };
+
+    const pause_detail_video = function () {
+      detail_is_paused = true;
+      show_detail_image(false);
+    };
+
+    const resume_detail_video = function () {
+      if (!detail_is_paused) return;
+      start_detail_playback();
+    };
+
+    const schedule_detail_autoplay = function () {
+      clear_detail_autoplay_timer();
+      if (!detail_video) return;
+      if (detail_is_paused || detail_is_playing) return;
+
+      detail_autoplay_timer = setTimeout(function () {
+        detail_autoplay_timer = null;
+        if (!$detail.hasClass("is-open")) return;
+        if (detail_is_paused || detail_is_playing) return;
+        play_detail_video();
+      }, DETAIL_AUTO_PLAY_DELAY);
+    };
+
+    const stop_detail_video = function () {
+      detail_is_paused = false;
+      show_detail_image(true);
+      sync_detail_mute_ui();
+    };
+
     const open_detail = function () {
       $detail.addClass("is-open");
       $("body").addClass("detail-open");
+      schedule_detail_autoplay();
     };
 
     const close_detail = function () {
+      stop_detail_video();
       $detail.removeClass("is-open");
       $("body").removeClass("detail-open");
     };
@@ -403,6 +523,39 @@ $(function () {
     $("[data-close-detail]").on("click", function () {
       close_detail();
     });
+
+    $detail_play_btn.on("click", function (e) {
+      e.stopPropagation();
+
+      if (detail_is_playing) return;
+
+      if (detail_is_paused) {
+        resume_detail_video();
+        return;
+      }
+
+      play_detail_video();
+    });
+
+    $detail_hero.on("click", function (e) {
+      if (!detail_is_playing) return;
+      if ($(e.target).closest("button, a, .detail__actions").length) return;
+      pause_detail_video();
+    });
+
+    $detail_mute_btn.on("click", function (e) {
+      e.stopPropagation();
+      if (!detail_video || !detail_is_playing) return;
+      detail_video.muted = !detail_video.muted;
+      sync_detail_mute_ui();
+    });
+
+    $detail_video.on("ended", function () {
+      detail_is_paused = false;
+      show_detail_image(true);
+    });
+
+    sync_detail_mute_ui();
 
     $(document).on("keydown", function (e) {
       if (e.key === "Escape" && $detail.hasClass("is-open")) {
