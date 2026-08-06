@@ -1,0 +1,274 @@
+{
+  "default_detail": {
+    "title": "교권보호국",
+    "logo": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/hero/hero_logo.webp",
+    "backdrop": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/hero/background_desktop.webp",
+    "video": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/hero/hero_video.mp4",
+    "year": "2026",
+    "episode_count": "에피소드 10개",
+    "badge": "HD",
+    "rating": "18+",
+    "description": "《소년심판》의 홍종찬 감독이 선사하는 통쾌한 액션 코미디.<br>최정예 교권보호국 4인방이 학폭 가해자들에게 제대로 된 쓴맛을 보게 만든다.",
+    "cast": "김무열, 표지훈, 이성민, 진기주",
+    "genre": "드라마",
+    "features": "흥미진진",
+    "episodes": [
+      {
+        "num": 1,
+        "name": "1화",
+        "runtime": "52분",
+        "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/episode/1.jpg",
+        "description": "든든한 빽을 믿고 무자비한 폭력을 일삼는 학폭 가해자가 장악한 학교. 그곳에 교권보호국 감독관 나화진이 홀로 투입된다. 존중이 뭔지, 제대로 된 참교육으로 보여주기 위해."
+      },
+      {
+        "num": 2,
+        "name": "2화",
+        "runtime": "57분",
+        "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/episode/2.jpg",
+        "description": "어딘가 어수룩한 봉근대가 반 조폭들이 점령한 학교에 들어선다. 화진은 특전사 출신다운 실력으로 학교를 지키고 그저 공부에 충실하고 싶은 한 학생을 돕는다."
+      },
+      {
+        "num": 3,
+        "name": "3화",
+        "runtime": "1시간 12분",
+        "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/episode/3.jpg",
+        "description": "어디로 튈지 모르는 럭비공 같은 교권보호국 감독관 임한림. 한 여고생 인플루언서가 교사들에 대한 허위 사실을 퍼뜨리자, 진실을 바로잡기 위해 한림이 투입된다."
+      }
+    ]
+  },
+  "top10": [
+    {
+      "id": "top10-1",
+      "rank": 1,
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/top1.webp"
+    },
+    {
+      "id": "top10-2",
+      "rank": 2,
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/top2.webp"
+    },
+    {
+      "id": "top10-3",
+      "rank": 3,
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/top3.webp"
+    },
+    {
+      "id": "top10-4",
+      "rank": 4,
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/top4.webp"
+    },
+    {
+      "id": "top10-5",
+      "rank": 5,
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/top5.webp"
+    },
+    {
+      "id": "top10-6",
+      "rank": 6,
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/top6.webp"
+    },
+    {
+      "id": "top10-7",
+      "rank": 7,
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/top7.webp"
+    },
+    {
+      "id": "top10-8",
+      "rank": 8,
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/top8.webp"
+    },
+    {
+      "id": "top10-9",
+      "rank": 9,
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/top9.webp"
+    },
+    {
+      "id": "top10-10",
+      "rank": 10,
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/top10.webp"
+    }
+  ],
+  "continue": [
+    {
+      "id": "continue-1",
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumbnail5.webp",
+      "label": "새로운 에피소드",
+      "progress": 65
+    },
+    {
+      "id": "continue-2",
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumbnail9.webp",
+      "progress": 40
+    },
+    {
+      "id": "continue-3",
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumbnail2.webp",
+      "progress": 80
+    },
+    {
+      "id": "continue-4",
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumnail1.webp",
+      "progress": 25
+    },
+    {
+      "id": "continue-5",
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumbnail7.webp",
+      "progress": 55
+    },
+    {
+      "id": "continue-6",
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumbnail4.webp",
+      "progress": 90
+    }
+  ],
+  "mylist": [
+    {
+      "id": "mylist-1",
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumbnail8.webp"
+    },
+    {
+      "id": "mylist-2",
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumbnail3.webp"
+    },
+    {
+      "id": "mylist-3",
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumbnail10.webp"
+    },
+    {
+      "id": "mylist-4",
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumbnail6.webp"
+    },
+    {
+      "id": "mylist-5",
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumbnail2.webp"
+    },
+    {
+      "id": "mylist-6",
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumbnail9.webp"
+    }
+  ],
+  "ai": [
+    {
+      "id": "ai-1",
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumbnail4.webp"
+    },
+    {
+      "id": "ai-2",
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumnail1.webp"
+    },
+    {
+      "id": "ai-3",
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumbnail7.webp"
+    },
+    {
+      "id": "ai-4",
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumbnail5.webp"
+    },
+    {
+      "id": "ai-5",
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumbnail10.webp"
+    },
+    {
+      "id": "ai-6",
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumbnail3.webp"
+    }
+  ],
+  "new": [
+    {
+      "id": "new-1",
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumbnail6.webp"
+    },
+    {
+      "id": "new-2",
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumbnail8.webp"
+    },
+    {
+      "id": "new-3",
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumbnail2.webp"
+    },
+    {
+      "id": "new-4",
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumbnail9.webp"
+    },
+    {
+      "id": "new-5",
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumnail1.webp"
+    },
+    {
+      "id": "new-6",
+      "title": "교권보호국",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumbnail4.webp"
+    }
+  ],
+  "genre": [
+    {
+      "id": "genre-1",
+      "title": "코미디",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumbnail8.webp",
+      "genre_label": "코미디"
+    },
+    {
+      "id": "genre-2",
+      "title": "드라마",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumbnail3.webp",
+      "genre_label": "드라마"
+    },
+    {
+      "id": "genre-3",
+      "title": "액션",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumbnail6.webp",
+      "genre_label": "액션"
+    },
+    {
+      "id": "genre-4",
+      "title": "SF",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumbnail10.webp",
+      "genre_label": "SF"
+    },
+    {
+      "id": "genre-5",
+      "title": "스릴러",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumbnail2.webp",
+      "genre_label": "스릴러"
+    },
+    {
+      "id": "genre-6",
+      "title": "로맨스",
+      "image": "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/cards/thumbnail9.webp",
+      "genre_label": "로맨스"
+    }
+  ]
+}

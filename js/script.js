@@ -218,22 +218,59 @@ $(function () {
     schedule_autoplay();
   }
 
-  // 드래그스크롤
+  // 드래그스크롤 (임계값 넘을 때만 capture → 클릭과 분리)
   const DRAG_THRESHOLD = 8;
 
-  $(".row__track").each(function () {
+  $(".row__track").each(function (index) {
     const $track = $(this);
     const track = this;
+    const ns = ".rowDrag" + index;
     let pointer_id = null;
     let is_dragging = false;
     let block_click = false;
     let start_x = 0;
     let scroll_left = 0;
 
+    const unbind_doc = function () {
+      $(document).off(ns);
+    };
+
     const reset_drag = function () {
       pointer_id = null;
       is_dragging = false;
       $track.removeClass("is-dragging");
+      unbind_doc();
+    };
+
+    const on_pointer_move = function (e) {
+      if (pointer_id !== e.originalEvent.pointerId) return;
+
+      const walk = e.clientX - start_x;
+
+      if (!is_dragging) {
+        if (Math.abs(walk) < DRAG_THRESHOLD) return;
+
+        is_dragging = true;
+        block_click = true;
+        $track.addClass("is-dragging");
+
+        try {
+          track.setPointerCapture(e.originalEvent.pointerId);
+        } catch (err) {}
+      }
+
+      e.preventDefault();
+      track.scrollLeft = scroll_left - walk;
+    };
+
+    const on_pointer_end = function (e) {
+      if (pointer_id !== e.originalEvent.pointerId) return;
+
+      if (track.hasPointerCapture && track.hasPointerCapture(e.originalEvent.pointerId)) {
+        track.releasePointerCapture(e.originalEvent.pointerId);
+      }
+
+      reset_drag();
     };
 
     $track.on("pointerdown", function (e) {
@@ -246,37 +283,14 @@ $(function () {
       start_x = e.clientX;
       scroll_left = track.scrollLeft;
 
-      track.setPointerCapture(e.originalEvent.pointerId);
+      $(document).on("pointermove" + ns, on_pointer_move);
+      $(document).on("pointerup" + ns + " pointercancel" + ns, on_pointer_end);
     });
 
-    $track.on("pointermove", function (e) {
-      if (pointer_id !== e.originalEvent.pointerId) return;
-
-      const walk = e.clientX - start_x;
-
-      if (!is_dragging) {
-        if (Math.abs(walk) < DRAG_THRESHOLD) return;
-        is_dragging = true;
-        block_click = true;
-        $track.addClass("is-dragging");
-      }
-
-      e.preventDefault();
-      track.scrollLeft = scroll_left - walk;
-    });
-
-    const on_pointer_end = function (e) {
-      if (pointer_id !== e.originalEvent.pointerId) return;
-
-      if (track.hasPointerCapture(e.originalEvent.pointerId)) {
-        track.releasePointerCapture(e.originalEvent.pointerId);
-      }
-
+    $track.on("lostpointercapture", function () {
+      if (pointer_id === null) return;
       reset_drag();
-    };
-
-    $track.on("pointerup pointercancel", on_pointer_end);
-    $track.on("lostpointercapture", reset_drag);
+    });
 
     track.addEventListener("click", function (e) {
       if (!block_click) return;
@@ -394,9 +408,18 @@ $(function () {
   let detail_autoplay_timer = null;
   let detail_is_playing = false;
   let detail_is_paused = false;
+  let content_map = {};
+  let default_detail = null;
 
   if ($detail.length) {
     const $detail_mute_icon = $detail_mute_btn.find(".material-symbols-outlined");
+    const $detail_backdrop = $detail.find("[data-detail-backdrop]");
+    const $detail_title = $detail.find("[data-detail-title]");
+    const $detail_meta_row = $detail.find("[data-detail-meta-row]");
+    const $detail_rating = $detail.find("[data-detail-rating]");
+    const $detail_desc = $detail.find("[data-detail-desc]");
+    const $detail_meta_side = $detail.find("[data-detail-meta-side]");
+    const $detail_episodes = $detail.find("[data-detail-episodes]");
 
     const clear_detail_fade_timer = function () {
       if (!detail_fade_timer) return;
@@ -504,7 +527,100 @@ $(function () {
       sync_detail_mute_ui();
     };
 
-    const open_detail = function () {
+    const merge_detail = function (item) {
+      return $.extend({}, default_detail || {}, item || {});
+    };
+
+    const set_detail_video_src = function (src) {
+      if (!detail_video || !src) return;
+
+      const $source = $detail_video.find("source");
+      if ($source.length) {
+        $source.attr("src", src);
+      } else {
+        $detail_video.attr("src", src);
+      }
+
+      detail_video.load();
+    };
+
+    const fill_detail = function (item) {
+      const data = merge_detail(item);
+      const title = data.title || "";
+
+      $detail_backdrop.attr("src", data.backdrop || "").attr("alt", title + " 상세 배경");
+      set_detail_video_src(data.video || "");
+
+      if (data.logo) {
+        $detail_title.html(
+          $("<img>", { src: data.logo, alt: title })
+        );
+      } else {
+        $detail_title.text(title);
+      }
+
+      $detail_meta_row.empty();
+      if (data.year) $detail_meta_row.append($("<span>").text(data.year));
+      if (data.episode_count) $detail_meta_row.append($("<span>").text(data.episode_count));
+      if (data.badge) {
+        $detail_meta_row.append($("<span>", { class: "detail__badge" }).text(data.badge));
+      }
+
+      $detail_rating.text(data.rating || "");
+      $detail_desc.html(data.description || "");
+
+      $detail_meta_side.empty();
+      if (data.cast) {
+        $detail_meta_side.append(
+          $("<p>").append($("<span>", { class: "detail__label" }).text("출연: "), document.createTextNode(data.cast))
+        );
+      }
+      if (data.genre) {
+        $detail_meta_side.append(
+          $("<p>").append($("<span>", { class: "detail__label" }).text("장르: "), document.createTextNode(data.genre))
+        );
+      }
+      if (data.features) {
+        $detail_meta_side.append(
+          $("<p>").append($("<span>", { class: "detail__label" }).text("시리즈 특징: "), document.createTextNode(data.features))
+        );
+      }
+
+      $detail_episodes.empty();
+      const episodes = data.episodes || [];
+      for (let i = 0; i < episodes.length; i++) {
+        const ep = episodes[i];
+        if (!ep) continue;
+
+        const $li = $("<li>", { class: "detail__episode" });
+        $li.append($("<span>", { class: "detail__episode-num" }).text(ep.num));
+
+        const $thumb = $("<div>", { class: "detail__episode-thumb" });
+        $thumb.append(
+          $("<img>", { src: ep.image || "", alt: (ep.name || "") + " 썸네일", draggable: false })
+        );
+        $thumb.append(
+          $("<span>", { class: "detail__episode-play", "aria-hidden": "true" }).append(
+            $("<span>", { class: "material-symbols-outlined" }).text("play_arrow")
+          )
+        );
+        $li.append($thumb);
+
+        const $info = $("<div>", { class: "detail__episode-info" });
+        const $top = $("<div>", { class: "detail__episode-top" });
+        $top.append($("<span>", { class: "detail__episode-name" }).text(ep.name || ""));
+        $top.append($("<span>", { class: "detail__episode-runtime" }).text(ep.runtime || ""));
+        $info.append($top);
+        $info.append($("<p>", { class: "detail__episode-desc" }).text(ep.description || ""));
+        $li.append($info);
+
+        $detail_episodes.append($li);
+      }
+    };
+
+    const open_detail = function (item) {
+      stop_detail_video();
+      fill_detail(item);
       $detail.addClass("is-open");
       $("body").addClass("detail-open");
       schedule_detail_autoplay();
@@ -517,11 +633,20 @@ $(function () {
     };
 
     $("[data-open-detail]").on("click", function () {
-      open_detail();
+      open_detail(default_detail);
     });
 
     $("[data-close-detail]").on("click", function () {
       close_detail();
+    });
+
+    $(document).on("click", "[data-card-id]", function (e) {
+      e.preventDefault();
+
+      const id = $(this).attr("data-card-id");
+      if (!id || !content_map[id]) return;
+
+      open_detail(content_map[id]);
     });
 
     $detail_play_btn.on("click", function (e) {
@@ -562,5 +687,138 @@ $(function () {
         close_detail();
       }
     });
+
+    // 카드 데이터 로드 / 렌더
+    const escape_html = function (str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    };
+
+    const RANK_BASE =
+      "https://cdn.jsdelivr.net/gh/d3vKJ/portfolio_assets@main/netflix/ranks/";
+
+    const create_top10_html = function (item) {
+      if (!item || !item.id || !item.image) return "";
+
+      const rank = Number(item.rank) || 0;
+      const title = escape_html(item.title || "");
+      const image = escape_html(item.image);
+      const id = escape_html(item.id);
+      const num_class =
+        rank === 10 ? "top10-card__num top10-card__num--10" : "top10-card__num";
+
+      return (
+        '<article class="top10-card">' +
+        '<span class="' +
+        num_class +
+        '" aria-hidden="true">' +
+        '<img src="' +
+        RANK_BASE +
+        rank +
+        '.svg" alt="' +
+        rank +
+        '위" draggable="false">' +
+        "</span>" +
+        '<a href="#" class="top10-card__poster" data-card-id="' +
+        id +
+        '">' +
+        '<img src="' +
+        image +
+        '" alt="' +
+        title +
+        '" draggable="false">' +
+        "</a>" +
+        "</article>"
+      );
+    };
+
+    const create_card_html = function (item, type) {
+      if (!item || !item.id || !item.image) return "";
+
+      if (type === "top10") return create_top10_html(item);
+
+      const title = escape_html(item.title || "");
+      const image = escape_html(item.image);
+      const id = escape_html(item.id);
+      let extra = "";
+      let card_class = "card";
+
+      if (type === "continue") {
+        card_class += " card--progress";
+        if (item.label) {
+          extra += '<span class="card__label">' + escape_html(item.label) + "</span>";
+        }
+        const progress = Math.max(0, Math.min(100, Number(item.progress) || 0));
+        extra +=
+          '<span class="card__progress"><span class="card__progress-bar" style="width: ' +
+          progress +
+          '%"></span></span>';
+      }
+
+      if (type === "genre") {
+        card_class += " card--genre";
+        if (item.genre_label) {
+          extra += '<span class="card__genre">' + escape_html(item.genre_label) + "</span>";
+        }
+      }
+
+      return (
+        '<article class="' +
+        card_class +
+        '">' +
+        '<a href="#" class="card__link" data-card-id="' +
+        id +
+        '">' +
+        '<img src="' +
+        image +
+        '" alt="' +
+        title +
+        '" class="card__img" draggable="false">' +
+        extra +
+        "</a>" +
+        "</article>"
+      );
+    };
+
+    const render_rows = function (data) {
+      if (!data) return;
+
+      default_detail = data.default_detail || null;
+      content_map = {};
+
+      const row_keys = ["top10", "continue", "mylist", "ai", "new", "genre"];
+
+      for (let i = 0; i < row_keys.length; i++) {
+        const key = row_keys[i];
+        const list = data[key];
+        const $track = $('[data-row="' + key + '"]');
+
+        if (!$track.length || !Array.isArray(list)) continue;
+
+        let html = "";
+
+        for (let j = 0; j < list.length; j++) {
+          const item = list[j];
+          if (!item || !item.id) continue;
+
+          content_map[item.id] = item;
+          html += create_card_html(item, key);
+        }
+
+        $track.html(html);
+        $track.find("img, a").attr("draggable", "false");
+      }
+    };
+
+    $.getJSON("js/data.json")
+      .done(function (data) {
+        render_rows(data);
+      })
+      .fail(function () {
+        console.error("카드 데이터를 불러오지 못했습니다.");
+      });
   }
 });
