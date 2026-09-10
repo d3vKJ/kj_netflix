@@ -1,4 +1,49 @@
 $(function () {
+  const NOTICE_KEY = "portfolio-notice-ack";
+  const $notice = $("[data-notice]");
+
+  if ($notice.length) {
+    const open_notice = function () {
+      $notice.prop("hidden", false);
+      requestAnimationFrame(function () {
+        $notice.addClass("is-open");
+      });
+      $("body").css("overflow", "hidden");
+      $notice.find(".notice__confirm").trigger("focus");
+    };
+
+    const close_notice = function () {
+      try {
+        sessionStorage.setItem(NOTICE_KEY, "1");
+      } catch (e) {}
+      $notice.removeClass("is-open");
+      $("body").css("overflow", "");
+      window.setTimeout(function () {
+        $notice.prop("hidden", true);
+      }, 250);
+    };
+
+    let already_acked = false;
+    try {
+      already_acked = sessionStorage.getItem(NOTICE_KEY) === "1";
+    } catch (e) {}
+
+    if (!already_acked) {
+      open_notice();
+    }
+
+    $notice.on("click", "[data-notice-close]", function (e) {
+      e.preventDefault();
+      close_notice();
+    });
+
+    $(document).on("keydown.notice", function (e) {
+      if (e.key !== "Escape") return;
+      if (!$notice.hasClass("is-open")) return;
+      close_notice();
+    });
+  }
+
   const $header = $(".header");
   const $back_top = $("#back-top");
 

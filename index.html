@@ -223,17 +223,34 @@
         </ul>
       </nav>
 
-      <address class="footer__info">
-        <p>넷플릭스서비시스코리아 유한회사 통신판매업신고번호: 제2018-서울종로-0426호 전화번호: 00-308-321-0058</p>
-        <p>대표: 레지널드 숀 톰프슨</p>
-        <p>이메일 주소: korea@netflix.com</p>
-        <p>주소: 대한민국 서울특별시 종로구 우정국로 26, 센트로폴리스 A동 20층 우편번호 03161</p>
-        <p>사업자등록번호: 165-87-00119</p>
-        <p>클라우드 호스팅: Amazon Web Services Inc.</p>
-        <p class="footer__copy">© 1997–2026 Netflix, Inc.</p>
-      </address>
+      <aside class="footer__notice" aria-label="사이트 안내">
+        <p class="footer__notice-title">포트폴리오 데모 안내</p>
+        <p>이 사이트는 <strong>포트폴리오·학습 목적</strong>으로 제작된 UI 클론입니다.<br>Netflix와 제휴·소속 관계가 없으며, 로그인·결제·개인정보 수집 등 <strong>피싱·정보 침해 목적은 전혀 없습니다.</strong></p>
+        <p class="footer__copy">Portfolio - Not affiliated with Netflix</p>
+      </aside>
     </div>
   </footer>
+
+  <div class="notice" data-notice hidden>
+    <div class="notice__backdrop" data-notice-close></div>
+    <div
+      class="notice__dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="notice-title"
+      aria-describedby="notice-desc"
+    >
+      <h2 class="notice__title" id="notice-title">포트폴리오 목적 사이트입니다</h2>
+      <div class="notice__body" id="notice-desc">
+        <p>이 사이트는 포트폴리오·학습용으로 제작된 UI 데모입니다.</p>
+        <p>Netflix와는 무관하며,</p>
+        <p>개인정보 수집·로그인 유도·결제 요청 등 <strong>피싱 목적은 단 1도 없습니다.</strong></p>
+      </div>
+      <button type="button" class="btn btn--play notice__confirm" data-notice-close>
+        <span class="btn__label">확인했습니다</span>
+      </button>
+    </div>
+  </div>
 
   <div class="detail" data-detail>
     <div class="detail__backdrop" data-close-detail></div>

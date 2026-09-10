@@ -229,6 +229,23 @@
   color: #8c8c8c;
 }
 
+.account-page .footer--account {
+  background: #f7f7f7;
+  color: #564d4d;
+  border-top: 1px solid #e5e5e5;
+}
+
+.account-page .footer__notice {
+  background: #fff;
+  border-color: #e5e5e5;
+  color: #564d4d;
+}
+
+.account-page .footer__notice-title,
+.account-page .footer__notice strong {
+  color: #141414;
+}
+
 /* 폰 */
 @media (max-width: 768px) {
   .account-header__inner {
